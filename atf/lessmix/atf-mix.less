@@ -1,0 +1,53 @@
+
+/** HELPERS **/
+
+.font-size(@current: 16, @base-size: 14) {
+  font-size: %(~"%sem", round(@current/@base-size, 4));
+//  font-size: %(~"%sem", round( unit(@current) / unit(@base-size), 4 ));
+
+}
+
+.background-clip(@x: text) {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+}
+.atf-text-gradient(@default-color, @start-color, @end-color, @deg: 0deg) {
+	color: @default-color;
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	background-repeat: repeat-x;
+	background-image: -webkit-linear-gradient(@deg, @start-color, @end-color); // Safari 5.1+, Chrome 10+
+	background-image: linear-gradient(@deg, @start-color, @end-color); // Standard, IE10
+	background: -o-linear-gradient(transparent, transparent);
+	background: -moz-linear-gradient(transparent, transparent);
+}
+
+.atf-text-shadow (@color: #ffffff, @x: 0, @y: 0, @radius: 1px) {
+	text-shadow: @x @y @radius @color;
+}
+
+
+.atf-aling-center(@horizontal: 50%, @vertical: 50%) {
+	position: absolute;
+	left: @horizontal;
+	top: @vertical;
+	-webkit-transform: translateX(-@horizontal) translateY(-@horizontal);
+	-ms-transform: translateX(-@horizontal) translateY(-@vertical);
+	transform: translateX(-@horizontal) translateY(-@vertical);
+}
+.atf-align-center-vertical(@vertical: 50%) {
+	position: absolute;
+	top: @vertical;
+	-webkit-transform: translateY(-@horizontal);
+	-ms-transform: translateY(-@vertical);
+	transform: translateY(-@vertical);
+}
+.atf-transition (@property: all, @time: .2s, @curve: ease-in-out) {
+	@transition: @property @time @curve;
+	-webkit-transition: @transition;
+	-moz-transition: @transition;
+	-ms-transition: @transition;
+	-o-transition: @transition;
+	transition: @transition;
+}
