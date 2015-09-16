@@ -5,8 +5,6 @@
 }
 
 .options-panel {
-	border: 2px solid #fff;
-	border-radius: 8px;
 	background-color: #fff;
 	overflow: hidden;
 	.box-shadow(0 0 10px rgba(51, 51, 51, .5));
@@ -14,19 +12,16 @@
 	* {
 		box-sizing: border-box;
 	}
-	.customize-control-content {
+	.customize-control-content, .editor-wrap, .wp-switch-editor {
 		&, * {
 			box-sizing: content-box;
 		}
 	}
 
 	.panel-header {
-		height: 70px;
 		background-color: #222;
-		padding: 10px 20px;
-		border-top-left-radius: 10px;
-		border-top-right-radius: 10px;
-		#gradient > .vertical();
+		padding: 20px 20px;
+		#gradient > .vertical(#555, #444);
 		.box-shadow(0 0 10px rgba(51, 51, 51, .5));
 
 
@@ -45,17 +40,15 @@
 		}
 	}
 	.sections-section {
-		overflow: hidden;
-		zoom: 1;
-		.box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
 		position: relative;
+      background: #ddd;
+      display: table;
+      width: 100%;
 
 		.sections-list {
-			float: left !important;
 			width: 200px;
-			background-color: #ddd;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 10px;
+          display: table-cell;
+          vertical-align: top;
 
 			ul {
 				list-style: none;
@@ -108,8 +101,8 @@
 			}
 		}
 		.sections-body {
-			overflow: hidden;
-			zoom: 1;
+          background: #fff;
+          display: table-cell;
 
 			.one-section-body {
 				display: none;
@@ -244,6 +237,56 @@
         background: #eeeeee;
       }
     }
+    .uploader {
+      .atf-options-upload-screenshot {
+        max-width: 75%;
+        box-shadow: inset 0 0 15px rgba(0,0,0,.1),inset 0 0 0 1px rgba(0,0,0,.05);
+        -webkit-box-shadow: inset 0 0 15px rgba(0,0,0,.1),inset 0 0 0 1px rgba(0,0,0,.05);
+        background: #eeeeee;
+      }
+    }
+  .group-container {
+    padding: 0;
+  }
+  .atf-options-group {
+    padding: 0;
+    th {
+      padding: 10px;
+      text-align: center;
+      width: auto;
+    }
+    .group-row-id {
+      width: 30px;
+      text-align: center;
+      background: #eee;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      vertical-align: top;
+    }
+    .group-row-controls {
+      background: #eee;
+      padding: 2px;
+    }
+    .btn-control-group {
+      border: 1px solid #ddd;
+      display: inline-block;
+      background: #fff;
+      padding: 6px 10px;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      border-radius: 50%;
+      text-decoration: none;
+      font-weight: 100;
+      margin: 2px;
+      &.minus {
+        background: #ff6347;
+        color: #ffffff;
+        border-color: #ffffff;
+      }
+    }
+  }
 
 
 }

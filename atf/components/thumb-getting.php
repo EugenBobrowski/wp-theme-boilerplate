@@ -33,7 +33,7 @@ function the_sc_post_thumbnail_as_css_bg() {
 	//echo get_the_post_thumbnail( null, $size, $attr );
 }
 
-function get_atf_post_thumbnail($width = 900, $height = 400) {
+function get_atf_post_thumbnail($width = 900, $height = 400, $crop=true) {
 	if (has_post_thumbnail()) {
 		global $attachment;
 		$thumb = wp_get_attachment_image_src(get_post_thumbnail_id(), 'full');

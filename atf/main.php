@@ -5,7 +5,7 @@
  * Time: 1:45 PM
  * To change this template use File | Settings | File Templates.
  */
-
+define ('ATF_VERSION', '1.0');
 
 
 

@@ -27,81 +27,23 @@
 		$sectionBody = '';
 		$active = '';
 		if (isset($_GET['page'])){
-			$activeSect = $_GET['page'];
+			$activeSect = str_replace('atf-options-', '', $_GET['page']);
+			$activeSect = str_replace('atf-options', '', $activeSect);
 		} else {
 			$activeSect = '';
 		}
+        if (!isset($this->optionsArray[$activeSect])) {
+            reset($this->optionsArray);
+            $activeSect = key($this->optionsArray);
+        }
 
-		foreach ($this->optionsArray as $sectId => $sectValue) {
-
-			$options = get_option(AFT_OPTIONS_PREFIX.$sectId);
-
-			if (isset($sectValue['desc'])) {
-				$sectionDesc = $sectValue['desc'];
-			}
-			else  {
-				$sectionDesc = '';
-			}
-
-			if (((empty($activeSect) || $activeSect == 'atf-options') && $i == 0) || $activeSect == 'atf-options-' .$sectId) {
-				$title = $sectValue['name'];
-
-				$i++;
-				$active = 'active';
-				$description = $sectionDesc;
-			} else {
-				$active = '';
-			}
-
-			$sectionList .= '<li><a href="#" id="'. $sectId.'" class="'.$active.'" data-section="section_'.$sectId.'" data-description="'.$sectionDesc.'">'.$sectValue['name'].'</a></li>';
-			$sectionBody .= '<div id="section_'.$sectId.'" class="one-section-body '.$active.' ">';
-			$sectionBody .= '<table class="form-table"><tbody>';
-
-			if (isset($sectValue['content'])) {
-				$sectionBody .= $sectValue['content'];
-			}
-			if (isset($sectValue['incFile'])) {
-
-			}
-			if (isset($sectValue['items'])) {
-
-				include_once get_template_directory().'/atf/options/htmlhelper.php';
-
-
-
-				foreach ( $sectValue['items'] as $itemId => $item ) {
-
-					if ($item['type'] == 'title') {
-						$sectionBody .= '<tr>';
-						$sectionBody .= '<th scope="row" colspan="2"><h3 class="title">'.$item['title'].'</h3></th>';
-						$sectionBody .= '</tr>';
-					} else {
-
-						$item['id'] = $itemId;
-
-						$item['name'] = AFT_OPTIONS_PREFIX.'['.$sectId.']['.$item['id'].']';
-
-						if (!isset($options[$item['id']]) && isset($item['default'])) {
-							$item['value'] = $item['default'];
-						} else {
-							$item['value'] = $options[$item['id']];
-						}
-
-						$sectionBody .= '<tr>';
-						$sectionBody .= '<th scope="row"><label for="'.$item['id'].'">'.$item['title'].'</label></th>';
-						$sectionBody .= '<td>'.AtfHtmlHelper::$item['type']($item).''.'</td>';
-						$sectionBody .= '</tr>';
-					}
-
-
-				}
-
-			}
-
-
-			$sectionBody .= '</tbody></table>';
-			$sectionBody .= '</div>';
-		}
+        $title = $this->optionsArray[$activeSect]['name'];
+        if (isset($this->optionsArray[$activeSect]['desc'])) {
+            $description = $this->optionsArray[$activeSect]['desc'];
+        }
+        else  {
+            $description =  '';
+        }
 
 		?>
 		<div class="panel-header">
@@ -111,13 +53,126 @@
 		<div class="sections-section">
 			<div class="sections-list">
 				<ul>
-					<?php echo $sectionList; ?>
+					<?php foreach ($this->optionsArray as $sectId => $sectValue) {
+
+                        if (isset($sectValue['desc'])) {
+                            $sectionDesc = $sectValue['desc'];
+                        }
+                        else  {
+                            $sectionDesc = '';
+                        }
+
+                        if ($activeSect == $sectId) {
+                            $active = 'active';
+                        } else {
+                            $active = '';
+                        }
+                        echo '<li><a href="#" id="'. $sectId.'" class="'.$active.'" data-section="section_'.$sectId.'" data-description="'.$sectionDesc.'">'.$sectValue['name'].'</a></li>';
+                    }
+
+                    ?>
 				</ul>
 			</div>
 			<div class="sections-body">
 				<form method="post" action="<?php echo $_SERVER['REQUEST_URI']?>">
 					<?php wp_nonce_field('update-atfOptions', 'update-atfOptions'); ?>
-					<?php echo $sectionBody; ?>
+					<?php
+                    foreach ($this->optionsArray as $sectId => $sectValue) {
+
+                        $options = get_option(AFT_OPTIONS_PREFIX.$sectId);
+
+                        if ($activeSect == $sectId) {
+                            $i++;
+                            $active = 'active';
+                        } else {
+                            $active = '';
+                        }
+                        ?>
+
+                    <div id="section_<?php echo $sectId; ?>" class="one-section-body <?php echo $active; ?>">
+                        <table class="form-table"><tbody>
+
+
+                        <?php
+
+
+
+                        if (isset($sectValue['content'])) {
+                            echo $sectValue['content'];
+                        }
+                        if (isset($sectValue['incFile'])) {
+
+                        }
+                        if (isset($sectValue['items'])) {
+
+                            include_once get_template_directory().'/atf/options/htmlhelper.php';
+
+                            foreach ( $sectValue['items'] as $itemId => $item ) {
+
+                                if ($item['type'] == 'title') {
+
+                                    echo  '<tr>';
+                                    echo  '<th scope="row" colspan="2"><h3 class="title">'.$item['title'].'</h3></th>';
+                                    echo  '</tr>';
+
+                                } elseif ($item['type'] == 'group') {
+
+                                    $item['id'] = $itemId;
+
+                                    $item['name'] = AFT_OPTIONS_PREFIX.'['.$sectId.']['.$item['id'].']';
+
+                                    if (!isset($options[$item['id']]) && isset($item['default'])) {
+                                        $item['value'] = $item['default'];
+                                    } else {
+                                        $item['value'] = $options[$item['id']];
+                                    }
+
+                                    echo  '<tr>';
+                                    echo  '<th scope="row" colspan="2"><h3 class="title">'.$item['title'].'</h3><p class="description">'.$item['desc'].'</p></th>';
+                                    echo  '</tr>';
+                                    echo  '<tr>';
+                                    echo  '<td scope="row " colspan="2" class="group-container">';
+
+                                    echo AtfHtmlHelper::$item['type']($item);
+
+                                    echo  '</td>';
+                                    echo  '</tr>';
+
+
+                                } else {
+
+                                    $item['id'] = $itemId;
+
+                                    $item['name'] = AFT_OPTIONS_PREFIX.'['.$sectId.']['.$item['id'].']';
+
+                                    if (!isset($options[$item['id']]) && isset($item['default'])) {
+                                        $item['value'] = $item['default'];
+                                    } else {
+                                        $item['value'] = $options[$item['id']];
+                                    }
+
+                                    echo  '<tr>';
+                                    echo  '<th scope="row"><label for="'.$item['id'].'">'.$item['title'].'</label></th>';
+                                    echo  '<td>';
+                                    echo AtfHtmlHelper::$item['type']($item);
+                                    echo '</td>';
+                                    echo  '</tr>';
+                                }
+                            }
+
+                        }
+
+                        ?>
+
+
+                            </tbody></table>
+                        </div>
+
+                        <?php
+
+                    }
+
+                    ?>
 					<div class="submit bottom">
 						<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 					</div>

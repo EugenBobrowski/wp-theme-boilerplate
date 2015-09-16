@@ -66,7 +66,13 @@ class AtfOptionsAdmin {
 		$screen = get_current_screen();
 		$atfOptionsIs = strpos($screen->id, str_replace('toplevel', '', $this->plugin_screen_hook_suffix));
 		if ($atfOptionsIs !== false) {
-			wp_enqueue_script($this->optionsSlug . '-admin-script', get_template_directory_uri().'/atf/options/admin/assets/admin.js', array('jquery', 'wp-color-picker'));
+			wp_enqueue_script(
+                $this->optionsSlug . '-admin-script',
+                get_template_directory_uri().'/atf/options/admin/assets/admin.js',
+                array('jquery', 'wp-color-picker'),
+                time(),
+                true
+            );
 
 			wp_enqueue_script(
 				'atf-options-field-upload-js',
@@ -76,7 +82,7 @@ class AtfOptionsAdmin {
 				true
 			);
 			wp_enqueue_media();
-			wp_localize_script('atf-options-field-upload-js', 'redux_upload', array('url' => get_template_directory_uri().'/atf/options/admin/assets/blank.png'));
+			wp_localize_script($this->optionsSlug . '-admin-script', 'redux_upload', array('url' => get_template_directory_uri().'/atf/options/admin/assets/blank.png'));
 
 		}
 	}
@@ -107,7 +113,7 @@ class AtfOptionsAdmin {
 	 */
 	public function display_plugin_admin_page() {
 //		$this->optionsArray = getOptionsArray();
-		atf_enqueue_less_style('options-style', '/atf/options/admin/assets/options.css', '/atf/options/admin/assets/options.less');
+		atf_enqueue_less_style('options-style', '/atf/options/admin/assets/options.css', '/atf/options/admin/assets/options.less', true);
 		include 'views/admin.php';
 		add_action('admin_footer_text', array($this, 'admin_footer_text'));
 	}
@@ -130,6 +136,8 @@ class AtfOptionsAdmin {
 
         $optionsArray = getOptionsArray();
 
+        var_dump($_POST[AFT_OPTIONS_PREFIX]);
+
 		foreach($_POST[AFT_OPTIONS_PREFIX] as $key=>$value) {
             if (isset($optionsArray[$key]['function']) && function_exists($optionsArray[$key]['function'])) {
                 $optionsArray[$key]['function']($value);
@@ -138,6 +146,6 @@ class AtfOptionsAdmin {
 		}
 	}
 	public function admin_footer_text($footer = '') {
-		echo '<span id="footer-thankyou"><img src="'.get_template_directory_uri().'/atf/options/admin/assets/AlgirithmicsTF.png'.'" style="height: 50px;vertical-align: middle;" > Thanks </span>';
+		echo '<span id="footer-thankyou"><img src="'.get_template_directory_uri().'/atf/options/admin/assets/AlgirithmicsTF.png'.'" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>. Version '.ATF_VERSION.' </span>';
 	}
 }

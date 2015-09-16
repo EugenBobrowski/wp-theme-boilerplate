@@ -10,7 +10,6 @@ class AtfOptions {
 		$this->defaults = $optionsArray;
 	}
 	function get($sectionName) {
-		var_dump($this->defaults[$sectionName]['items']);
 		$options = get_option(AFT_OPTIONS_PREFIX.$sectionName);
 		foreach ($this->defaults[$sectionName]['items'] as $itemId => $item ) {
 			if(!isset($options[$itemId])) {
@@ -28,6 +27,7 @@ function get_atf_options($sectionName) {
 			$options[$itemId] = $item['default'];
 		}
 	}
+    $options = apply_filters('before_return_options_from_'.$sectionName, $options);
 	return $options;
 }
 // Depricated

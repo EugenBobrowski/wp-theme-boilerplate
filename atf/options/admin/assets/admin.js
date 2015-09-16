@@ -1,7 +1,104 @@
 (function ( $ ) {
 	"use strict";
 
-	$(function () {
+
+
+        var $optionsPanel, custom_file_frame;
+
+        $(document).ready(function(){
+            $optionsPanel = $('.options-panel');
+
+            $optionsPanel.find('.uploader').find("img[src='']").attr("src", redux_upload.url);
+
+            $optionsPanel.on('click', ".atf-options-upload", function( event ) {
+                var activeFileUploadContext = $(this).parent();
+                var relid = $(this).attr('rel-id');
+
+                event.preventDefault();
+
+                // If the media frame already exists, reopen it.
+                /*if ( typeof(custom_file_frame)!=="undefined" ) {
+                 custom_file_frame.open();
+                 return;
+                 }*/
+
+                // if its not null, its broking custom_file_frame's onselect "activeFileUploadContext"
+                custom_file_frame = null;
+
+                // Create the media frame.
+                custom_file_frame = wp.media.frames.customHeader = wp.media({
+                    // Set the title of the modal.
+                    title: $(this).data("choose"),
+
+                    // Tell the modal to show only images. Ignore if want ALL
+                    library: {
+                        type: 'image'
+                    },
+                    // Customize the submit button.
+                    button: {
+                        // Set the text of the button.
+                        text: $(this).data("update")
+                    }
+                });
+
+                custom_file_frame.on( "select", function() {
+                    // Grab the selected attachment.
+                    var attachment = custom_file_frame.state().get("selection").first();
+
+                    // Update value of the targetfield input with the attachment url.
+
+                    $('.atf-options-upload-screenshot',activeFileUploadContext).attr('src', attachment.attributes.url);
+                    $('#' + relid ).val(attachment.attributes.url).trigger('change');
+
+                    $('.atf-options-upload',activeFileUploadContext).hide();
+                    $('.atf-options-upload-screenshot',activeFileUploadContext).show();
+                    $('.atf-options-upload-remove',activeFileUploadContext).show();
+                });
+
+                custom_file_frame.open();
+            });
+
+            $optionsPanel.on('click', '.atf-options-upload-remove', function( event ) {
+                event.preventDefault();
+                $(this).parent().removeMedia();
+            });
+
+            $optionsPanel.on('click', '.btn-control-group', function(e){
+                e.preventDefault();
+                var $this = $(this);
+                var $thisRow = $this.parents('.row');
+                if ($this.hasClass('plus')) {
+
+                    var $newRow = $thisRow.clone();
+                    $newRow.hide();
+                    $newRow.insertAfter($thisRow);
+                    $newRow.resetRow();
+                    $newRow.fadeIn('slow');
+                    $newRow.resetOrder();
+
+
+
+                } else if  ($this.hasClass('minus')) {
+                    var $sibling = $thisRow.siblings('.row');
+                    if ($sibling.length > 0 ) {
+
+                        $thisRow.fadeOut('slow', function(){
+                            $thisRow.remove();
+                            $sibling.first().resetOrder();
+                        });
+
+                    } else {
+                        $thisRow.resetRow();
+                    }
+
+
+
+
+                }
+            });
+
+        });
+
 
 		$('.sections-list ul li a').click(
 			function(){
@@ -85,9 +182,59 @@
             s.parentNode.insertBefore(wf, s);
         })();
 
-	});
 
 
+
+
+
+        $.fn.removeMedia = function() {
+            var $mediaContainer = $(this).parent();
+            $mediaContainer.find('input').val('');
+            $mediaContainer.find('.atf-options-upload').show('slow');
+            $mediaContainer.find('.atf-options-upload-screenshot').attr("src", redux_upload.url);
+            $mediaContainer.find('.atf-options-upload-remove').hide('slow');
+        };
+    $.fn.resetOrder = function(){
+        var i = 1;
+        $(this).parent().find('.row').each(function(){
+            $(this).find('.group-row-id').text(i);
+            i++;
+        });
+    };
+
+    $.fn.resetRow = function(){
+        $(this).find('td').each(function(){
+            var $td = $(this);
+            if ($td.data('field-name-template') != undefined) {
+
+                if ($td.data('field-type') == 'addMedia') {
+                    $td.removeMedia();
+                } else {
+                    console.log($td);
+                }
+                console.log($td.data('field-name-template').replace('#', uniqid()));
+                $td.find('input, select').attr('name', $td.data('field-name-template').replace('#', uniqid())).val('');
+            }
+
+
+        });
+    };
+
+
+        var uniqid = function (pr, en) {
+            var pr = pr || '', en = en || false, result;
+
+            var seed = function (s, w) {
+                s = parseInt(s, 10).toString(16);
+                return w < s.length ? s.slice(s.length - w) : (w > s.length) ? new Array(1 + (w - s.length)).join('0') + s : s;
+            };
+
+            result = pr + seed(parseInt(new Date().getTime() / 1000, 10), 8) + seed(Math.floor(Math.random() * 0x75bcd15) + 1, 5);
+
+            if (en) result += (Math.random() * 10).toFixed(8).toString();
+
+            return result;
+        };
 
 
 
