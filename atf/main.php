@@ -8,9 +8,6 @@
 define ('ATF_VERSION', '1.0');
 
 
-
-
-
 function atf_admin_notice($message) {
 	echo $message;
 }
@@ -19,17 +16,6 @@ include 'components/atf-less.php';
 include 'components/atf-tgmpa.php';
 
 include 'options/options.php';
-
-
-
-
-
-// Register Custom Navigation Walker
-
-register_nav_menus( array(
-	'primary' => __( 'Primary Menu', 'THEMENAME' ),
-) );
-
 
 /**
  * ...
@@ -47,8 +33,6 @@ endif;
 
 
 include 'components/bootstrap_comments.php';
-
-//include 'inc/background.php';
 
 
 if ( ! function_exists( 'pagination' ) ) :
