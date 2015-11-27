@@ -8,7 +8,7 @@ module.exports = function (grunt) {
 					optimization: 2
 					},
 				files: {
-					"css/general.css": "less/customize.less"
+					"css/general.css": "less/bootstrap.less"
 				}
 			}
 		},
