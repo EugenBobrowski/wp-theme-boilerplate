@@ -30,8 +30,10 @@ if (!class_exists('AtfHtmlHelper')) {
                     echo '<td class="group-row-id">' . $i . '</td>';
                     foreach ($args['items'] as $key => $item) {
                         $item['id'] = $key;
+                        $item['desc'] = '';
                         $item['uniqid'] = uniqid($item['id']);
                         $item['name'] = $args['name'] . '[' . $row_key . '][' . $item['id'] . ']';
+
 
                         if (!isset($row_val[$item['id']])) {
                             $item['value'] = '';
@@ -40,7 +42,10 @@ if (!class_exists('AtfHtmlHelper')) {
                         }
 
 
-                        echo '<td data-field-type="' . $item['type'] . '" data-field-name-template="' . $args['name'] . '[#][' . $item['id'] . ']' . '">';
+                        echo '<td '
+                            .'data-field-type="' . $item['type'] . '" '
+                            .'data-field-name-template="' . $args['name'] . '[#][' . $item['id'] . ']' . '">';
+                        $item['id'] = $item['uniqid'];
                         echo self::$item['type']($item);
                         echo '</td>';
 
@@ -56,6 +61,22 @@ if (!class_exists('AtfHtmlHelper')) {
 
                 ?>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td class="group-row-id">#</td>
+                    <?php
+
+                    foreach ($args['items'] as $key => $item) {
+
+                        echo '<td>';
+                        echo (empty($item['desc'])) ? '' : '<p  class="description">' . $item['desc'] . '</p>';
+                        echo '</td>';
+                    }
+
+                    ?>
+                    <th class="group-row-controls"></th>
+                </tr>
+                </tfoot>
             </table>
 
 
@@ -254,6 +275,12 @@ if (!class_exists('AtfHtmlHelper')) {
             echo $result;
         }
 
+
+
+
+        public static function editor($args = array()) {
+            self::wysiwyg($args);
+        }
         public static function wysiwyg($args = array())
         {
             $default = array(
@@ -262,7 +289,22 @@ if (!class_exists('AtfHtmlHelper')) {
                 'addClass' => '',
                 'rows' => 10,
                 'cols' => 50,
-                'options' => array(),
+                'options' => array(
+                    'wpautop' => true, // use wpautop?
+                    'media_buttons' => false, // show insert/upload button(s)
+                    'textarea_rows' => get_option('default_post_edit_rows', 10), // rows="..."
+                    'tabindex' => '',
+                    'editor_css' => '', // intended for extra styles for both visual and HTML editors buttons, needs to include the `<style>` tags, can use "scoped".
+                    'editor_class' => '', // add extra class(es) to the editor textarea
+                    'teeny' => false, // output the minimal editor config used in Press This
+                    'dfw' => false, // replace the default fullscreen with DFW (needs specific css)
+                    'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+                    'quicktags' => true, // load Quicktags, can be used to pass settings directly to Quicktags using an array()
+                    'toolbar1' => 'bold,italic,strikethrough,bullist,numlist,blockquote,hr,alignleft,aligncenter,alignright,link,unlink,wp_more,spellchecker,wp_fullscreen,wp_adv ',
+                    'toolbar2' => 'formatselect,underline,alignjustify,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help ',
+                    'toolbar3' => '',
+                    'toolbar4' => '',
+                ),
             );
             foreach ($default as $key => $value) {
                 if (!isset($args[$key])) {

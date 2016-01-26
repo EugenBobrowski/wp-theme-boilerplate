@@ -69,18 +69,11 @@ class AtfOptionsAdmin {
 			wp_enqueue_script(
                 $this->optionsSlug . '-admin-script',
                 get_template_directory_uri().'/atf/options/admin/assets/admin.js',
-                array('jquery', 'wp-color-picker'),
+                array('jquery', 'wp-color-picker', 'jquery-ui-sortable'),
                 time(),
                 true
             );
 
-			wp_enqueue_script(
-				'atf-options-field-upload-js',
-				get_template_directory_uri().'/atf/options/admin/assets/field_upload.js',
-				array('jquery'),
-				time(),
-				true
-			);
 			wp_enqueue_media();
 			wp_localize_script($this->optionsSlug . '-admin-script', 'redux_upload', array('url' => get_template_directory_uri().'/atf/options/admin/assets/blank.png'));
 
@@ -88,7 +81,7 @@ class AtfOptionsAdmin {
 	}
 
 	public function add_plugin_admin_menu() {
-		$this->optionsArray = getOptionsArray();
+		$this->optionsArray = get_options_array();
 		$this->plugin_screen_hook_suffix = add_menu_page(
 			__('Theme Options', 'atf'),
 			__('Theme Options', 'atf'),
@@ -98,7 +91,7 @@ class AtfOptionsAdmin {
 			get_template_directory_uri().'/atf/options/admin/assets/redvorona.png'//$icon_url,
 			//$position
 		);
-		foreach (getOptionsArray() as $sectID=>$section) {
+		foreach (get_options_array() as $sectID=>$section) {
 			//add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 			add_submenu_page('atf-options', __('Theme Options', 'atf'), $section['name'], 'edit_theme_options', 'atf-options-' .$sectID, array($this, 'display_plugin_admin_page'));
 		}
@@ -113,7 +106,7 @@ class AtfOptionsAdmin {
 	 */
 	public function display_plugin_admin_page() {
 //		$this->optionsArray = getOptionsArray();
-		atf_enqueue_less_style('options-style', '/atf/options/admin/assets/options.css', '/atf/options/admin/assets/options.less', true);
+		atf_enqueue_less_style('options-style', '/atf/options/admin/assets/options.css', '/atf/options/admin/assets/options.less');
 		include 'views/admin.php';
 		add_action('admin_footer_text', array($this, 'admin_footer_text'));
 	}
@@ -134,14 +127,11 @@ class AtfOptionsAdmin {
 			return;
 		}
 
-        $optionsArray = getOptionsArray();
+		$new_options_values = apply_filters('new_options_values', $_POST[AFT_OPTIONS_PREFIX]);
 
-        var_dump($_POST[AFT_OPTIONS_PREFIX]);
 
-		foreach($_POST[AFT_OPTIONS_PREFIX] as $key=>$value) {
-            if (isset($optionsArray[$key]['function']) && function_exists($optionsArray[$key]['function'])) {
-                $optionsArray[$key]['function']($value);
-            }
+		foreach($new_options_values as $key=>$value) {
+
 			update_option(AFT_OPTIONS_PREFIX.$key, $value);
 		}
 	}

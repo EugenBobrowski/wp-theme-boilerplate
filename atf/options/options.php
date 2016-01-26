@@ -18,8 +18,9 @@ class AtfOptions {
 		}
 	}
 }
+
 function get_atf_options($sectionName) {
-	$optionsArray = getOptionsArray();
+	$optionsArray = get_options_array();
 	$options = get_option(AFT_OPTIONS_PREFIX.$sectionName);
 	if (!is_array($options)) $options = array();
 	foreach ($optionsArray[$sectionName]['items'] as $itemId => $item ) {
@@ -35,12 +36,17 @@ function getAtfOptions($sectionName) {
 	return get_atf_options($sectionName);
 }
 
+function get_options_array() {
+	global $atf_options_array;
 
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && function_exists('getOptionsArray')) {
-	require_once( plugin_dir_path( __FILE__ ) . 'admin/options_admin.php' );
-	AtfOptionsAdmin::get_instance(getOptionsArray());
+	if (empty($atf_options_array)) $atf_options_array = apply_filters('get_options_array', array());
+
+	return $atf_options_array;
 }
 
-
+if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )) {
+	require_once( plugin_dir_path( __FILE__ ) . 'admin/options_admin.php' );
+	AtfOptionsAdmin::get_instance();
+}
 
 ?>

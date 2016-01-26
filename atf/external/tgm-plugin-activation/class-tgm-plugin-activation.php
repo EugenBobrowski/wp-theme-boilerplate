@@ -421,6 +421,21 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 
             // All plugin information will be stored in an array for processing.
             $plugin = array();
+            //http://yasla.loc/wp-admin/themes.php?
+            //page=tgmpa-install-plugins
+            //&plugin=woocommerce-paypal-pro-payment-gateway
+            //&plugin_name=WooCommerce+PayPal+Pro
+            //&plugin_source=repo
+            //&tgmpa-install=install-plugin
+            //&_wpnonce=eb29cc368e
+
+            //http://yasla.loc/wp-admin/themes.php?
+            //page=tgmpa-install-plugins
+            //&plugin=woocommerce-event-product-type
+            //&plugin_name=Woocommerce+Event++Product+Type
+            //&plugin_source=https%3A%2F%2Fgithub.com%2Flenbradley%2FWoocommerce-Event-Product-Type%2Farchive%2Fmaster.zip
+            //&tgmpa-install=install-plugin
+            //&_wpnonce=eb29cc368e
 
             // Checks for actions from hover links to process the installation.
             if ( isset( $_GET['plugin'] ) && ( isset( $_GET['tgmpa-install'] ) && 'install-plugin' == $_GET['tgmpa-install'] ) ) {

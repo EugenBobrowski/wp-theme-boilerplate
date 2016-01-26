@@ -229,9 +229,13 @@
   border: 1px solid #ddd;
   vertical-align: top;
 }
+.options-panel .atf-options-group .row .atf-options-upload-screenshot {
+  max-height: 150px;
+}
 .options-panel .atf-options-group .group-row-controls {
   background: #eee;
   padding: 2px;
+  width: 40px;
 }
 .options-panel .atf-options-group .btn-control-group {
   border: 1px solid #ddd;
