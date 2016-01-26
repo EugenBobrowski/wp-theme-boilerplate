@@ -88,7 +88,7 @@ class AtfOptionsAdmin {
 			'edit_theme_options',
 			'atf-options',
 			array($this, 'display_plugin_admin_page'),
-			get_template_directory_uri().'/atf/options/admin/assets/redvorona.png'//$icon_url,
+			get_template_directory_uri().'/atf/options/admin/assets/atf-options.png'//$icon_url,
 			//$position
 		);
 		foreach (get_options_array() as $sectID=>$section) {
@@ -136,6 +136,6 @@ class AtfOptionsAdmin {
 		}
 	}
 	public function admin_footer_text($footer = '') {
-		echo '<span id="footer-thankyou"><img src="'.get_template_directory_uri().'/atf/options/admin/assets/AlgirithmicsTF.png'.'" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>. Version '.ATF_VERSION.' </span>';
+		echo '<span id="footer-thankyou"><img src="'.get_template_directory_uri().'/atf/options/admin/assets/atfdev-logo.png'.'" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>. Version '.ATF_VERSION.' </span>';
 	}
 }
