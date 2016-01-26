@@ -169,9 +169,6 @@ add_action( 'wp_head', 'twentyfifteen_javascript_detection', 0 );
  */
 function twentyfifteen_scripts() {
 
-	// Add Genericons, used in the main stylesheet.
-	wp_enqueue_style( 'genericons', get_template_directory_uri() . '/genericons/genericons.css', array(), '3.2' );
-
 	// Load our main stylesheet.
     atf_enqueue_less_style('general', '/css/general.css', '/less/customize.less');
 //	wp_enqueue_style( 'twentyfifteen-style', get_stylesheet_uri() );
