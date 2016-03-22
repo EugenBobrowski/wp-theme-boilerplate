@@ -21,8 +21,14 @@ include 'options/options.php';
  * ...
  */
 
-//include 'components/user-frontend/user-frontend.php';
-include 'components/jcarousel-gallery.php';
+/**
+ * Customize Woocommerce and integrate.
+ *
+ * @since Twenty Fifteen 1.0
+ */
+require get_template_directory() . '/inc/woo-customizing.php';
+
+include 'components/shortcode-gallery-views.php';
 include 'components/thumb-getting.php';
 include 'components/wp_bootstrap_navwalker.php';
 include 'components/breadcrumbs.php';
