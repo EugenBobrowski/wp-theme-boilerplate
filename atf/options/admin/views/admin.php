@@ -89,7 +89,7 @@
                         }
                         ?>
 
-                    <div id="section_<?php echo $sectId; ?>" class="one-section-body <?php echo $active; ?>">
+                    <div id="section_<?php echo $sectId; ?>" class="one-section-body atf-fields <?php echo $active; ?>">
                         <table class="form-table"><tbody>
 
 

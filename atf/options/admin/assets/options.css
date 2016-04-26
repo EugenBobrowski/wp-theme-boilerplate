@@ -112,60 +112,61 @@
   border-radius: 5px;
   background: #ddd;
 }
-.options-panel .radio-image label {
+.atf-fields .radio-image label {
   display: block;
   padding: 5px;
   text-align: center;
   float: left;
   border: 1px solid transparent;
 }
-.options-panel .radio-image label.checked {
+.atf-fields .radio-image label.checked {
   background: #eee;
   border: 1px solid #FDADAD;
 }
-.options-panel .radio-image label:hover {
+.atf-fields .radio-image label:hover {
   background: #eee;
 }
-.options-panel .radio-image label span {
+.atf-fields .radio-image label span {
   display: block;
 }
-.options-panel .radio-image input[type='radio'] {
+.atf-fields .radio-image input[type='radio'] {
   display: none;
 }
-.options-panel .radio-image img {
+.atf-fields .radio-image img {
   border: 5px solid #eee;
   height: 70px;
 }
-.options-panel .on-off-box {
+.atf-fields .on-off-box {
   display: inline-block;
   position: relative;
   height: 30px;
   width: 60px;
   border-radius: 15px;
   background-color: #FF6347;
+  vertical-align: middle;
   -webkit-transition: background-color 2s ease;
   transition: background-color 2s ease;
 }
-.options-panel .on-off-box input {
+.atf-fields .on-off-box input {
   display: none;
 }
-.options-panel .on-off-box.on {
+.atf-fields .on-off-box.on {
   background-color: #6AA772;
   -webkit-transition: background-color 2s ease;
   transition: background-color 2s ease;
 }
-.options-panel .on-off-box.on .tumbler {
+.atf-fields .on-off-box.on .tumbler {
   left: 32px;
   -webkit-transition: left 1s ease;
   transition: left 1s ease;
 }
-.options-panel .on-off-box.on .text.on {
+.atf-fields .on-off-box.on .text.on {
   opacity: 1;
 }
-.options-panel .on-off-box.on .text.off {
+.atf-fields .on-off-box.on .text.off {
   opacity: 0;
 }
-.options-panel .on-off-box .tumbler {
+.atf-fields .on-off-box .tumbler {
   display: block;
   position: absolute;
   left: 2px;
@@ -177,7 +178,7 @@
   -webkit-transition: left 1s ease;
   transition: left 1s ease;
 }
-.options-panel .on-off-box .text {
+.atf-fields .on-off-box .text {
   display: block;
   position: absolute;
   color: #fff;
@@ -189,55 +190,55 @@
   -webkit-transition: opacity 2s ease;
   transition: opacity 2s ease;
 }
-.options-panel .on-off-box .text.on {
+.atf-fields .on-off-box .text.on {
   left: 2px;
   opacity: 0;
 }
-.options-panel .on-off-box .text.off {
+.atf-fields .on-off-box .text.off {
   right: 2px;
   opacity: 1;
 }
-.options-panel .google-webfonts .demotext {
+.atf-fields .google-webfonts .demotext {
   padding: 25px;
   margin: 20px 0;
   background: #eeeeee;
 }
-.options-panel .uploader .atf-options-upload-screenshot {
+.atf-fields .uploader .atf-options-upload-screenshot {
   max-width: 75%;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   -webkit-box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   background: #eeeeee;
 }
-.options-panel .group-container {
+.atf-fields .group-container {
   padding: 0;
 }
-.options-panel .atf-options-group {
+.atf-fields .atf-options-group {
   padding: 0;
 }
-.options-panel .atf-options-group th {
+.atf-fields .atf-options-group th {
   padding: 10px;
   text-align: center;
   width: auto;
 }
-.options-panel .atf-options-group .group-row-id {
+.atf-fields .atf-options-group .group-row-id {
   width: 30px;
   text-align: center;
   background: #eee;
 }
-.options-panel .atf-options-group th,
-.options-panel .atf-options-group td {
+.atf-fields .atf-options-group th,
+.atf-fields .atf-options-group td {
   border: 1px solid #ddd;
   vertical-align: top;
 }
-.options-panel .atf-options-group .row .atf-options-upload-screenshot {
+.atf-fields .atf-options-group .row .atf-options-upload-screenshot {
   max-height: 150px;
 }
-.options-panel .atf-options-group .group-row-controls {
+.atf-fields .atf-options-group .group-row-controls {
   background: #eee;
   padding: 2px;
   width: 40px;
 }
-.options-panel .atf-options-group .btn-control-group {
+.atf-fields .atf-options-group .btn-control-group {
   border: 1px solid #ddd;
   display: inline-block;
   background: #fff;
@@ -250,7 +251,7 @@
   font-weight: 100;
   margin: 2px;
 }
-.options-panel .atf-options-group .btn-control-group.minus {
+.atf-fields .atf-options-group .btn-control-group.minus {
   background: #ff6347;
   color: #ffffff;
   border-color: #ffffff;
