@@ -31,7 +31,7 @@ require_once ('inc/atf-options.php');
 //Required plugins
 require_once ('inc/atf-plugin-activation.php');
 //ATF
-require_once ('atf/main.php');
+require_once ('atf/atf.php');
 
 
 /**
