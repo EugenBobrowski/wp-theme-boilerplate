@@ -25,15 +25,6 @@
  * @since Twenty Fifteen 1.0
  */
 
-
-//ATF Options
-require_once ('inc/atf-options.php');
-//Required plugins
-require_once ('inc/atf-plugin-activation.php');
-//ATF
-require_once ('atf/atf.php');
-
-
 /**
  * Set the content width based on the theme's design and stylesheet.
  *
